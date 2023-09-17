@@ -26,4 +26,5 @@ jobs:
         with:
           name: finance-backend-stack-backend
           template: finance-backend.yaml
+          capabilities: CAPABILITY_NAMED_IAM 
          # parameter-overrides: "MyParam1=myValue,MyParam2=${{ secrets.MY_SECRET_VALUE }}"
