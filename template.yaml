@@ -1,0 +1,114 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Template para crear una API Gateway y una Lambda en Python que imprime "Hello, World!" en los registros de CloudWatch.
+
+Parameters:
+  pStage:
+    Type: String
+    Default: dev
+    Description: Ambiente
+
+Resources:
+  rLambdaRegisterClientPetition:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "lambda-client-register-petition-${pStage}"
+      Role: !GetAtt "rIAMLambdaRegisterClientPetitionRole.Arn"
+      Handler: "index.lambda_handler"
+      Code:
+        ZipFile: |
+          import json
+          import logging
+
+          # Configuración de registro
+          logger = logging.getLogger()
+          logger.setLevel(logging.INFO)
+
+          def lambda_handler(event, context):
+              logger.info("Hello, World!")
+              return {
+                  "statusCode": 200,
+                  "body": "Function executed successfully."
+              }
+
+      Runtime: python3.8
+
+  rIAMLambdaRegisterClientPetitionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: LambdaExecutionRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaLogsPolocy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: arn:aws:logs:*:*:*
+        - PolicyName: LambdaInvokePolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - lambda:InvokeFunction
+                Resource: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:<api-id>/*/<method>/<resource>"
+
+  rApiGWFFinanceAPI:
+    Type: AWS::ApiGateway::RestApi
+    DependsOn: rLambdaRegisterClientPetition
+    Properties:
+      Name: !Sub "cashiapp-finance-api-rest-${pStage}"
+
+  rApiGWFinanceResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt "rApiGWFFinanceAPI.RootResourceId"
+      PathPart: finance
+      RestApiId: !Ref "rApiGWFFinanceAPI"
+
+  rApiGWFinanceMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      AuthorizationType: NONE
+      HttpMethod: GET
+      ResourceId: !Ref rApiGWFinanceResource
+      RestApiId: !Ref rApiGWFFinanceAPI
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri: !Sub
+          - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${rLambdaRegisterClientPetition.Arn}/invocations"
+          - lambdaArn: !GetAtt "rLambdaRegisterClientPetition.Arn"
+      MethodResponses:
+        - StatusCode: "200"
+
+  rApiGWFinanceDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn: "rApiGWFinanceMethod"
+    Properties:
+      RestApiId: !Ref "rApiGWFFinanceAPI"
+      StageName: !Ref pStage
+
+  rAPIGWFinanceLambdaPermission:
+    Type: AWS::Lambda::Permission
+    DependsOn: rApiGWFinanceDeployment
+    Properties:
+      Action: "lambda:InvokeFunction"
+      FunctionName: !Ref rLambdaRegisterClientPetition
+      Principal: "apigateway.amazonaws.com"
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${rApiGWFFinanceAPI}/*/GET/finance"
+Outputs:
+  ApiEndpoint:
+    Description: URL de la API Gateway
+    Value:
+      Fn::Sub: https://${rApiGWFFinanceAPI}.execute-api.${AWS::Region}.amazonaws.com/prod/hello/
