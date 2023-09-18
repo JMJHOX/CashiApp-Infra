@@ -21,7 +21,22 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Check if deployment bucket exists
+        id: deployment-stack-exists
+        run: |
+          stack_name="finance-deployment-stack"
+          stack_status=$(aws cloudformation describe-stacks --stack-name $stack_name --query "Stacks[0].StackStatus" --output text)
+          
+          if [ "$stack_status" = "CREATE_COMPLETE" ] || [ "$stack_status" = "UPDATE_COMPLETE" ]; then
+            echo "Stack already exists with status: $stack_status"
+            exit 0  # Salir sin hacer nada si el stack ya existe
+          else
+            echo "Stack does not exist or is in an incomplete state."
+          fi
+        continue-on-error: true
+
       - name: Creating bucket for deployment
+        if: steps.deployment-stack-exists.outputs.stack_exists == 'false' # Ejecutar solo si el stack no existe o no está completo
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: finance-deployment-stack
