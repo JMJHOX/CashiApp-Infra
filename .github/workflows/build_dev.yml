@@ -25,7 +25,7 @@ jobs:
         id: deployment-stack-exists
         run: |
           stack_name="finance-deployment-stack"
-          stack_status=$(aws cloudformation describe-stacks --stack-name $stack_name --query "Stacks[0].StackStatus" --output text 2>&1)
+          stack_status=$(aws cloudformation describe-stacks --stack-name $stack_name --query "Stacks[0].StackStatus" --output json 2>&1 | jq -r .)
           echo "Stack Status: $stack_status"  # Agregar esta línea para imprimir el valor de stack_status
           
           if [[ "$stack_status" == *"does not exist"* ]]; then
