@@ -27,6 +27,9 @@ Resources:
       Code:
         S3Bucket: !Ref DeploymentBucketName
         S3Key: "api-rest/Register_Client_Petitions.zip" # Reemplaza con la ubicación de tu código en el bucket
+      Environment: # Agrega la nueva variable de entorno aquí
+        Variables:
+          DBTableNewClientsToRegister: !Ref "rDynamoDbNewClientsFinanceTable"
       Runtime: python3.8
 
   rIAMLambdaRegisterClientPetitionRole:
@@ -104,6 +107,24 @@ Resources:
       FunctionName: !Ref rLambdaRegisterClientPetition
       Principal: "apigateway.amazonaws.com"
       SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${rApiGWFFinanceAPI}/*/GET/finance"
+
+  rDynamoDbNewClientsFinanceTable:
+    Type: "AWS::DynamoDB::Table"
+    Properties:
+      TableName: !Sub "cashi-finance-session-clients-${pStage}"
+      AttributeDefinitions:
+        - AttributeName: Id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: Id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      BillingMode: PAY_PER_REQUEST
+      SSESpecification:
+        SSEEnabled: true
+        SSEType: AES256
 Outputs:
   ApiEndpoint:
     Description: URL de la API Gateway

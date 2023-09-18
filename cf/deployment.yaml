@@ -20,7 +20,12 @@ Resources:
         BlockPublicPolicy: true
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
-
+      Tags:
+        - Key: Environment
+          Value: Dev
+        - Key: Application
+          Value: CashiApp
+          
 Outputs:
   OutS3DeploymentFinanceInfraARN:
     Description: ARN del bucket S3
