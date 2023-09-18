@@ -23,7 +23,7 @@ Resources:
     Properties:
       FunctionName: !Sub "lambda-client-register-petition-${pStage}"
       Role: !GetAtt "rIAMLambdaRegisterClientPetitionRole.Arn"
-      Handler: "index.lambda_handler"
+      Handler: "Register_Client_Petitions/index.lambda_handler"
       Code:
         S3Bucket: !Ref DeploymentBucketName
         S3Key: "api-rest/Register_Client_Petitions.zip" # Reemplaza con la ubicación de tu código en el bucket
