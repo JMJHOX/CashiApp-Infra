@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Plantilla apra despliegue de infraestructura en AWS
+
+Parameters:
+  pStage:
+    Type: String
+    Default: dev
+    Description: Ambiente
+
+Resources:
+  rS3DeploymentTemplate:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "${pStage}-deployment-finance-template-bucket" # Cambia esto a un nombre único y descriptivo
+      AccessControl: Private # Establece el control de acceso a "Private" por defecto
+      VersioningConfiguration:
+        Status: Enabled # Habilita el versionado del bucket
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+Outputs:
+  OutS3DeploymentFinanceInfraARN:
+    Description: ARN del bucket S3
+    Value: !GetAtt rS3DeploymentTemplate.Arn
+    Export:
+      Name: !Sub "${pStage}-deployment-finance-s3-arn"
+
+  OutS3DeploymentFinanceS3BucketName:
+    Description: Nombre del bucket S3
+    Value: !Ref rS3DeploymentTemplate
+    Export:
+      Name: !Sub "${pStage}-deployment-finance-s3-name"
