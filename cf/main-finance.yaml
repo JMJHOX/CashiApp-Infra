@@ -18,5 +18,7 @@ Resources:
               Fn::ImportValue: !Sub "${pStage}-deployment-finance-s3-name"
       Parameters:
         pStage: !Ref pStage
-        DeploymentBucketName: !Sub "${pStage}-deployment-finance-s3-name"
-        DeploymentBucketARN: !Sub "${pStage}-deployment-finance-s3-arn"
+        DeploymentBucketName:
+          Fn::ImportValue: !Sub "${pStage}-deployment-finance-s3-name"
+        DeploymentBucketARN:
+          Fn::ImportValue: !Sub "${pStage}-deployment-finance-s3-arn"
