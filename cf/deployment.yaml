@@ -22,10 +22,10 @@ Resources:
         RestrictPublicBuckets: true
       Tags:
         - Key: Environment
-          Value: Dev
+          Value: !Ref pStage
         - Key: Application
           Value: CashiApp
-          
+
 Outputs:
   OutS3DeploymentFinanceInfraARN:
     Description: ARN del bucket S3

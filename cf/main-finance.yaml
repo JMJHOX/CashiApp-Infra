@@ -24,6 +24,6 @@ Resources:
           Fn::ImportValue: !Sub "${pStage}-deployment-finance-s3-arn"
       Tags:
         - Key: Environment
-          Value: Dev
+          Value: !Ref pStage
         - Key: Application
           Value: CashiApp
