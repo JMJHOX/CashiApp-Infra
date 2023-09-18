@@ -8,7 +8,7 @@ Parameters:
     Description: Ambiente
 
 Resources:
-  MainStack:
+  rStackFinanceBackend:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL:
