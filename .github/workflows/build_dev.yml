@@ -35,6 +35,15 @@ jobs:
           fi
         continue-on-error: true
 
+      - name: Generar Archivos ZIP de lambdas
+        run: |
+          # Genera archivos ZIP para cada carpeta con código Python
+          for folder in api-rest another-api; do
+            cd $folder
+            zip -r $folder.zip .
+            cd ..
+          done
+
       - name: Creating bucket for deployment
         if: steps.deployment-stack-exists.outputs.stack_exists == 'false' # Ejecutar solo si el stack no existe o no está completo
         uses: aws-actions/aws-cloudformation-github-deploy@v1
