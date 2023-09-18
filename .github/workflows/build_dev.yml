@@ -34,6 +34,7 @@ jobs:
           echo "Archivos subidos exitosamente"
           aws s3 sync api-rest s3://dev-deployment-finance-template-bucket/api-rest
           echo "Archivos subidos exitosamente"
+        continue-on-error: true # Esto permite que el flujo continúe incluso si algún comando falla
 
 
       - name: Deploy to AWS CloudFormation
