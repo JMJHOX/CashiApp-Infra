@@ -37,11 +37,11 @@ jobs:
 
       - name: Generar Archivos ZIP de lambdas
         run: |
-          # Genera archivos ZIP para cada carpeta con código Python
-          for folder in api-rest; do
-            cd $folder
-            zip -r $folder.zip .
-            cd ..
+          # Genera archivos ZIP para cada subcarpeta dentro de "api-rest"
+          cd api-rest
+          for dir in */; do
+            dir_name=$(basename $dir)
+            zip -r $dir_name.zip $dir
           done
 
       - name: Creating bucket for deployment
