@@ -38,7 +38,7 @@ jobs:
       - name: Generar Archivos ZIP de lambdas
         run: |
           # Genera archivos ZIP para cada carpeta con código Python
-          for folder in api-rest another-api; do
+          for folder in api-rest; do
             cd $folder
             zip -r $folder.zip .
             cd ..
