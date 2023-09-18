@@ -25,21 +25,24 @@ jobs:
         id: deployment-stack-exists
         run: |
           stack_name="finance-deployment-stack"
-          stack_status=$(aws cloudformation describe-stacks --stack-name $stack_name --query "Stacks[0].StackStatus" --output text)
+          stack_status=$(aws cloudformation describe-stacks --stack-name $stack_name --query "Stacks[0].StackStatus" --output text 2>&1)
           
-          if [ "$stack_status" = "CREATE_COMPLETE" ] || [ "$stack_status" = "UPDATE_COMPLETE" ]; then
-            echo "Stack already exists with status: $stack_status"
-          else
-            echo "Stack does not exist or is in an incomplete state. Creating deployment stack..."
+          if [[ "$stack_status" == *"does not exist"* ]]; then
+            echo "Stack does not exist. Creating deployment stack..."
             
             # Crea el stack de despliegue si no existe
             aws cloudformation create-stack \
               --stack-name $stack_name \
               --template-body file://cf/deployment.yaml \
               --capabilities CAPABILITY_NAMED_IAM
-              
+            
             # Espera a que el stack se complete antes de continuar
             aws cloudformation wait stack-create-complete --stack-name $stack_name
+          elif [ "$stack_status" = "CREATE_COMPLETE" ] || [ "$stack_status" = "UPDATE_COMPLETE" ]; then
+            echo "Stack already exists with status: $stack_status"
+          else
+            echo "Stack is in an incomplete state or has an error."
+            exit 1
           fi
         continue-on-error: true
 
