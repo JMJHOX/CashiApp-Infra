@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Description: Plantilla de ejemplo para stacks anidados
 
 Parameters:
@@ -11,9 +11,10 @@ Resources:
   MainStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: {'Fn::ImportValue': !Sub 'https://s3.amazonaws.com/${${pStage}-deployment-finance-s3-arn}/finance-backend.yaml' }
-     #   Fn::ImportValue: !Sub "https://s3.amazonaws.com/my-bucket/child-stack-1.yaml"
+      TemplateURL:
+        Fn::Sub:
+          - "https://s3.amazonaws.com/${s3BucketName}/finance-backend.yaml"
+          - s3BucketName:
+              Fn::ImportValue: !Sub "${pStage}-deployment-finance-s3-arn"
       Parameters:
         pStage: !Ref pStage
-
-
