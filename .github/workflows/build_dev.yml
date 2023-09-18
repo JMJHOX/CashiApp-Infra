@@ -56,8 +56,12 @@ jobs:
         run: |
           aws s3 sync cf s3://dev-deployment-finance-template-bucket/cf
           echo "Archivos subidos exitosamente"
-          aws s3 sync api-rest s3://dev-deployment-finance-template-bucket/api-rest
-          echo "Archivos subidos exitosamente"
+          
+          # Subir archivos ZIP de la carpeta 'api-rest' al bucket S3
+          for zip_file in api-rest/*.zip; do
+            aws s3 cp $zip_file s3://dev-deployment-finance-template-bucket/api-rest/
+            echo "Archivo $zip_file subido exitosamente"
+          done
         continue-on-error: true # Esto permite que el flujo continúe incluso si algún comando falla
 
 
