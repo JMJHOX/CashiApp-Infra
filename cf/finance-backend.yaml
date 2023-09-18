@@ -119,9 +119,6 @@ Resources:
         - AttributeName: Id
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
-      SSESpecification:
-        SSEEnabled: true
-        SSEType: AES256
 Outputs:
   ApiEndpoint:
     Description: URL de la API Gateway
