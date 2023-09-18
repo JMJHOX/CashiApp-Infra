@@ -6,7 +6,7 @@ logger.setLevel(logging.INF)
 
 
 def lambda_handler(event, context):
-    logger.info("Hello, World!")
+    logger.info("Hello, Probando!")
     return {
         "statusCode": 200,
         "body": "Function executed successfully."
