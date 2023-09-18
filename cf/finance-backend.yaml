@@ -17,7 +17,7 @@ Parameters:
     Default: dev
     Description: Ambiente
 
-Resources:    
+Resources:
   rLambdaRegisterClientPetition:
     Type: AWS::Lambda::Function
     Properties:
@@ -25,8 +25,8 @@ Resources:
       Role: !GetAtt "rIAMLambdaRegisterClientPetitionRole.Arn"
       Handler: "index.lambda_handler"
       Code:
-        S3Bucket: !Ref DeploymentBucketName 
-        S3Key: !Sub "api-rest/Register_Client_Petitions"      # Reemplaza con la ubicación de tu código en el bucket
+        S3Bucket: !Ref DeploymentBucketName
+        S3Key: "api-rest/Register_Client_Petitions/" # Reemplaza con la ubicación de tu código en el bucket
       Runtime: python3.8
 
   rIAMLambdaRegisterClientPetitionRole:
