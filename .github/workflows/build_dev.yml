@@ -29,9 +29,17 @@ jobs:
           
           if [ "$stack_status" = "CREATE_COMPLETE" ] || [ "$stack_status" = "UPDATE_COMPLETE" ]; then
             echo "Stack already exists with status: $stack_status"
-            exit 0  # Salir sin hacer nada si el stack ya existe
           else
-            echo "Stack does not exist or is in an incomplete state."
+            echo "Stack does not exist or is in an incomplete state. Creating deployment stack..."
+            
+            # Crea el stack de despliegue si no existe
+            aws cloudformation create-stack \
+              --stack-name $stack_name \
+              --template-body file://cf/deployment.yaml \
+              --capabilities CAPABILITY_NAMED_IAM
+              
+            # Espera a que el stack se complete antes de continuar
+            aws cloudformation wait stack-create-complete --stack-name $stack_name
           fi
         continue-on-error: true
 
@@ -56,7 +64,7 @@ jobs:
         run: |
           aws s3 sync cf s3://dev-deployment-finance-template-bucket/cf
           echo "Archivos subidos exitosamente"
-          
+
           # Subir archivos ZIP de la carpeta 'api-rest' al bucket S3
           for zip_file in api-rest/*.zip; do
             aws s3 cp $zip_file s3://dev-deployment-finance-template-bucket/api-rest/
