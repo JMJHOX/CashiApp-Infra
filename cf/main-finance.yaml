@@ -13,8 +13,10 @@ Resources:
     Properties:
       TemplateURL:
         Fn::Sub:
-          - "https://s3.amazonaws.com/${s3BucketName}/finance-backend.yaml"
+          - "https://s3.amazonaws.com/${s3BucketName}/cf/finance-backend.yaml"
           - s3BucketName:
               Fn::ImportValue: !Sub "${pStage}-deployment-finance-s3-name"
       Parameters:
         pStage: !Ref pStage
+        DeploymentBucketName: !Sub "${pStage}-deployment-finance-s3-name"
+        DeploymentBucketARN: !Sub "${pStage}-deployment-finance-s3-arn"

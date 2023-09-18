@@ -7,7 +7,17 @@ Parameters:
     Default: dev
     Description: Ambiente
 
-Resources:
+  DeploymentBucketName:
+    Type: String
+    Default: dev
+    Description: Ambiente
+
+  DeploymentBucketARN:
+    Type: String
+    Default: dev
+    Description: Ambiente
+
+Resources:    
   rLambdaRegisterClientPetition:
     Type: AWS::Lambda::Function
     Properties:
@@ -15,21 +25,8 @@ Resources:
       Role: !GetAtt "rIAMLambdaRegisterClientPetitionRole.Arn"
       Handler: "index.lambda_handler"
       Code:
-        ZipFile: |
-          import json
-          import logging
-
-          # Configuración de registro
-          logger = logging.getLogger()
-          logger.setLevel(logging.INFO)
-
-          def lambda_handler(event, context):
-              logger.info("Hello, World!")
-              return {
-                  "statusCode": 200,
-                  "body": "Function executed successfully."
-              }
-
+        S3Bucket: !Ref DeploymentBucketName 
+        S3Key: !Sub "api-rest/Register_Client_Petitions"      # Reemplaza con la ubicación de tu código en el bucket
       Runtime: python3.8
 
   rIAMLambdaRegisterClientPetitionRole:
