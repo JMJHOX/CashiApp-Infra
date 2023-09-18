@@ -30,9 +30,9 @@ jobs:
 
       - name: Upload contents of 'cf' folder to S3 bucket
         run: |
-          aws s3 sync cf s3://dev-deployment-finance-template-bucket
+          aws s3 sync cf s3://dev-deployment-finance-template-bucket/cf
           echo "Archivos subidos exitosamente"
-          aws s3 sync api-rest s3://dev-deployment-finance-template-bucket
+          aws s3 sync api-rest s3://dev-deployment-finance-template-bucket/api-rest
           echo "Archivos subidos exitosamente"
 
 
@@ -40,6 +40,6 @@ jobs:
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: finance-backend-stack-backend
-          template: finance-backend.yaml
+          template: cf/main-finance.yaml
           capabilities: CAPABILITY_NAMED_IAM
           # parameter-overrides: "MyParam1=myValue,MyParam2=${{ secrets.MY_SECRET_VALUE }}"
