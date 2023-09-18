@@ -25,25 +25,40 @@ jobs:
         id: deployment-stack-exists
         run: |
           stack_name="finance-deployment-stack"
-          stack_status=$(aws cloudformation describe-stacks --stack-name $stack_name --query "Stacks[0].StackStatus" --output json 2>&1 | jq -r .)
-          echo "Stack Status: $stack_status"  # Agregar esta línea para imprimir el valor de stack_status
+          stack_info=$(aws cloudformation describe-stacks --stack-name $stack_name --output json 2>&1)
           
-          if [[ "$stack_status" == *"does not exist"* ]]; then
-            echo "Stack does not exist. Creating deployment stack..."
-            
-            # Crea el stack de despliegue si no existe
-            aws cloudformation create-stack \
-              --stack-name $stack_name \
-              --template-body file://cf/deployment.yaml \
-              --capabilities CAPABILITY_NAMED_IAM
-            
-            # Espera a que el stack se complete antes de continuar
-            aws cloudformation wait stack-create-complete --stack-name $stack_name
-          elif [ "$stack_status" = "CREATE_COMPLETE" ] || [ "$stack_status" = "UPDATE_COMPLETE" ]; then
-            echo "Stack already exists with status: $stack_status"
+          # Verificar si hubo un error en la llamada
+          if [[ $? -ne 0 ]]; then
+            error_message=$(echo "$stack_info" | jq -r '.Message')
+            if [[ "$error_message" == *"Stack with id $stack_name does not exist"* ]]; then
+              echo "Stack does not exist. Creating deployment stack..."
+              
+              # Crea el stack de despliegue si no existe
+              aws cloudformation create-stack \
+                --stack-name $stack_name \
+                --template-body file://cf/deployment.yaml \
+                --capabilities CAPABILITY_NAMED_IAM
+              
+              # Espera a que el stack se complete antes de continuar
+              aws cloudformation wait stack-create-complete --stack-name $stack_name
+            else
+              echo "Error: $error_message"
+              exit 1
+            fi
           else
-            echo "Stack is in an incomplete state or has an error."
-            exit 1
+            stack_status=$(echo "$stack_info" | jq -r '.Stacks[0].StackStatus')
+            echo "Stack Status: $stack_status"
+            
+            if [[ "$stack_status" == "ROLLBACK_COMPLETE" ]]; then
+              echo "Stack already exists with status: $stack_status"
+            elif [[ "$stack_status" == "CREATE_COMPLETE" ]] || [[ "$stack_status" == "UPDATE_COMPLETE" ]]; then
+              echo "Stack already exists with status: $stack_status"
+            elif [[ "$stack_status" == "DELETE_COMPLETE" ]]; then
+              echo "Stack is in DELETE_COMPLETE state. You may need to delete it manually if needed."
+            else
+              echo "Stack is in an incomplete state or has an error."
+              exit 1
+            fi
           fi
         continue-on-error: true
 
