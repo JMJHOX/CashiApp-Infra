@@ -15,6 +15,6 @@ Resources:
         Fn::Sub:
           - "https://s3.amazonaws.com/${s3BucketName}/finance-backend.yaml"
           - s3BucketName:
-              Fn::ImportValue: !Sub "${pStage}-deployment-finance-s3-arn"
+              Fn::ImportValue: !Sub "${pStage}-deployment-finance-s3-name"
       Parameters:
         pStage: !Ref pStage
