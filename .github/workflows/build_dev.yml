@@ -21,10 +21,25 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Creating bucket for deployment
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: finance-deployment-stack
+          template: cf/deployment.yaml
+          capabilities: CAPABILITY_NAMED_IAM
+
+      - name: Upload contents of 'cf' folder to S3 bucket
+        run: |
+          aws s3 sync cf s3://dev-deployment-finance-template-bucket
+          echo "Archivos subidos exitosamente"
+          aws s3 sync api-rest s3://dev-deployment-finance-template-bucket
+          echo "Archivos subidos exitosamente"
+
+
       - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: finance-backend-stack-backend
           template: finance-backend.yaml
-          capabilities: CAPABILITY_NAMED_IAM 
-         # parameter-overrides: "MyParam1=myValue,MyParam2=${{ secrets.MY_SECRET_VALUE }}"
+          capabilities: CAPABILITY_NAMED_IAM
+          # parameter-overrides: "MyParam1=myValue,MyParam2=${{ secrets.MY_SECRET_VALUE }}"
