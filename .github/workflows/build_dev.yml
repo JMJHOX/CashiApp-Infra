@@ -31,7 +31,7 @@ jobs:
             echo "Stack does not exist. Creating deployment stack..."
             
             # Crea el stack de despliegue si no existe
-            aws cloudformation create-stack \ 
+            aws cloudformation create-stack \
               --stack-name $stack_name \
               --template-body file://cf/deployment.yaml \
               --capabilities CAPABILITY_NAMED_IAM
