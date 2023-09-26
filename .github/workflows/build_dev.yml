@@ -60,7 +60,7 @@ jobs:
               exit 1
             fi
           fi
-        continue-on-error: true
+        continue-on-error: false
 
       - name: Generar Archivos ZIP de lambdas
         run: |
