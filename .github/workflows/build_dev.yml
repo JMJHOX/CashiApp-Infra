@@ -25,9 +25,16 @@ jobs:
         id: deployment-stack-exists
         run: |
           stack_name="finance-deployment-stack"
-          stack_info=$(aws cloudformation describe-stacks --stack-name $stack_name --output json 2>&1)
-          echo $stack_info
-
+          if aws cloudformation describe-stacks --stack-name $stack_name --output json; then
+            echo "Stack exists."
+          else
+            echo "Stack does not exist. Creating deployment stack..."
+            aws cloudformation create-stack \
+              --stack-name $stack_name \
+              --template-body file://cf/deployment.yaml \
+              --capabilities CAPABILITY_NAMED_IAM
+            aws cloudformation wait stack-create-complete --stack-name $stack_name
+          fi
         continue-on-error: false
 
       - name: Generar Archivos ZIP de lambdas
