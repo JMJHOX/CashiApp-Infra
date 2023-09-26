@@ -9,13 +9,11 @@ Parameters:
 
   DeploymentBucketName:
     Type: String
-    Default: dev
-    Description: Ambiente
+    Description: Nombre del bucket de despliegue
 
   DeploymentBucketARN:
     Type: String
-    Default: dev
-    Description: Ambiente
+    Description: ARN del bucket de despliegue
 
 Resources:
   rLambdaRegisterClientPetition:
@@ -73,7 +71,7 @@ Resources:
     Type: AWS::ApiGateway::Resource
     Properties:
       ParentId: !GetAtt "rApiGWFFinanceAPI.RootResourceId"
-      PathPart: finance
+      PathPart: cashback/finance
       RestApiId: !Ref "rApiGWFFinanceAPI"
 
   rApiGWFinanceMethod:
