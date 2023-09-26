@@ -26,7 +26,8 @@ jobs:
         run: |
           stack_name="finance-deployment-stack"
           stack_info=$(aws cloudformation describe-stacks --stack-name $stack_name --output json 2>&1)
-          
+          echo "trabajo"
+          echo $stack_info
           # Verificar si hubo un error en la llamada
           if [[ $? -ne 0 ]]; then
             error_message=$(echo "$stack_info" | jq -r '.Message')
