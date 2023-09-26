@@ -61,6 +61,12 @@ Resources:
                   - lambda:InvokeFunction
                 Resource: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:<api-id>/*/<method>/<resource>"
 
+  rApiGWFFinanceAPI:
+    Type: AWS::ApiGateway::RestApi
+    DependsOn: rLambdaRegisterClientPetition
+    Properties:
+      Name: !Sub "cashiapp-finance-api-rest-${pStage}"
+
   rApiGWFinanceResource:
     Type: AWS::ApiGateway::Resource
     Properties:
@@ -68,31 +74,37 @@ Resources:
       PathPart: finance
       RestApiId: !Ref "rApiGWFFinanceAPI"
 
-      # Define los métodos debajo de esta sección
-      # Puedes agregar más métodos si es necesario
-      # Por ejemplo, para POST, PUT, DELETE, etc.
-      # Simplemente copia la sección del método y ajusta el HttpMethod y Uri
-      # Asegúrate de que el ResourceId se refiera a rApiGWFinanceResource
-
-      # Método GET
-      GetMethod:
-        HttpMethod: GET
-        AuthorizationType: NONE
-        Integration:
-          IntegrationHttpMethod: POST
-          Type: AWS_PROXY
-          Uri: !Sub
-            - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${rLambdaRegisterClientPetition.Arn}/invocations"
-            - lambdaArn: !GetAtt "rLambdaRegisterClientPetition.Arn"
-        MethodResponses:
-          - StatusCode: "200"
+  rApiGWFinanceMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      AuthorizationType: NONE
+      HttpMethod: GET
+      ResourceId: !Ref rApiGWFinanceResource
+      RestApiId: !Ref rApiGWFFinanceAPI
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri: !Sub
+          - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${rLambdaRegisterClientPetition.Arn}/invocations"
+          - lambdaArn: !GetAtt "rLambdaRegisterClientPetition.Arn"
+      MethodResponses:
+        - StatusCode: "200"
 
   rApiGWFinanceDeployment:
     Type: AWS::ApiGateway::Deployment
-    DependsOn: "rApiGWFinanceResource"  # Asegúrate de que dependa del recurso
+    DependsOn: "rApiGWFinanceMethod"
     Properties:
       RestApiId: !Ref "rApiGWFFinanceAPI"
       StageName: !Ref pStage
+
+  rAPIGWFinanceLambdaPermission:
+    Type: AWS::Lambda::Permission
+    DependsOn: rApiGWFinanceDeployment
+    Properties:
+      Action: "lambda:InvokeFunction"
+      FunctionName: !Ref rLambdaRegisterClientPetition
+      Principal: "apigateway.amazonaws.com"
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${rApiGWFFinanceAPI}/*/GET/finance"
 
   rDynamoDbNewClientsFinanceTable:
     Type: "AWS::DynamoDB::Table"
