@@ -2,7 +2,7 @@ import json
 import logging
 # Configuración de registro
 logger = logging.getLogger()
-logger.setLevel(logging.INF)
+logger.setLevel(logging.INFO)
 
 
 def lambda_handler(event, context):
