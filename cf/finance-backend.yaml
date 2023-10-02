@@ -150,7 +150,8 @@ Resources:
             Action:
               - s3:GetObject
             Resource:
-             - !Sub "${rS3StaticWebsiteBucket.Arn}/*"
+              - !Sub "${rS3StaticWebsiteBucket.Arn}"
+              - !Sub "${rS3StaticWebsiteBucket.Arn}/*"
 Outputs:
   ApiEndpoint:
     Description: URL de la API Gateway
