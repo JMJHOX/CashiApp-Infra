@@ -155,7 +155,7 @@ Resources:
           - Sid: PublicReadGetObject
             Effect: Allow
             Principal:
-              Service: !GetAtt "cloudfront.amazonaws.com"
+              Service: "cloudfront.amazonaws.com"
             Action:
               - s3:GetObject
             Resource:
