@@ -155,12 +155,15 @@ Resources:
           - Sid: PublicReadGetObject
             Effect: Allow
             Principal:
-              AWS: !GetAtt rCloudFrontWebsiteDistribution.DomainName
+              Service: !GetAtt "cloudfront.amazonaws.com"
             Action:
               - s3:GetObject
             Resource:
               - !Sub "${rS3StaticWebsiteBucket.Arn}"
               - !Sub "${rS3StaticWebsiteBucket.Arn}/*"
+            Condition:
+              StringEquals:
+                aws:SourceVpc: !GetAtt "rCloudFrontWebsiteDistribution.DomainName"
 
   rCloudFrontWebsiteDistribution:
     Type: AWS::CloudFront::Distribution
