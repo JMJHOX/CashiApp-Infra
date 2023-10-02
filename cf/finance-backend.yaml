@@ -142,8 +142,8 @@ Resources:
         BlockPublicPolicy: true # Restringir el acceso público a través de políticas
         IgnorePublicAcls: true # Ignorar ACL públicas
         RestrictPublicBuckets: true # Restringir buckets públicos
-      WebsiteConfiguration:
-        IndexDocument: index.html
+      # WebsiteConfiguration:
+      #   IndexDocument: index.html
 
   rS3StaticWebsiteBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -155,7 +155,7 @@ Resources:
           - Sid: PublicReadGetObject
             Effect: Allow
             Principal:
-              AWS: !GetAtt rCloudFrontDistribution.DomainName
+              AWS: !GetAtt rCloudFrontWebsiteDistribution.DomainName
             Action:
               - s3:GetObject
             Resource:
