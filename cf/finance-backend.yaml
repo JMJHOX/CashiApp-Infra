@@ -134,7 +134,9 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub "static-website-finance-${pStage}"
-      AccessControl: PublicRead # Establece el control de acceso a "Private" por defecto
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
       PublicAccessBlockConfiguration:
         BlockPublicAcls: false
         BlockPublicPolicy: false
