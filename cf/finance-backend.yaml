@@ -163,7 +163,7 @@ Resources:
               - !Sub "${rS3StaticWebsiteBucket.Arn}/*"
             Condition:
               StringEquals:
-                aws:SourceVpc: !GetAtt "rCloudFrontWebsiteDistribution.DomainName"
+                aws:SourceVpc: !GetAtt "rCloudFrontWebsiteDistribution.Arn"
 
   rCloudFrontWebsiteDistribution:
     Type: AWS::CloudFront::Distribution
