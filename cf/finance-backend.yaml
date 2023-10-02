@@ -166,8 +166,10 @@ Resources:
     Properties:
       DistributionConfig:
         Origins:
-          - DomainName: !GetAtt rS3StaticWebsiteBucket.RegionalDomainName
-            Id: S3Origin
+          - Id: S3Origin
+            DomainName: !GetAtt rS3StaticWebsiteBucket.RegionalDomainName
+            S3OriginConfig:
+              OriginAccessIdentity: ''
         Enabled: true
         DefaultCacheBehavior:
           ViewerProtocolPolicy: redirect-to-https
