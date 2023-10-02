@@ -185,7 +185,7 @@ Resources:
                 - "/"
                 - - "origin-access-identity"
                   - "cloudfront"
-                  - !Ref OriginAccessIdentity
+                  - !Ref rOriginAccessIdentity
         Enabled: true
         DefaultCacheBehavior:
           ViewerProtocolPolicy: redirect-to-https
