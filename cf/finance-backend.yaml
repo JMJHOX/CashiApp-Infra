@@ -94,7 +94,7 @@ Resources:
               method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
               method.response.header.Access-Control-Allow-Origin: "'*'"
             ResponseTemplates:
-              application/json: '{}'
+              application/json: "{}"
       MethodResponses:
         - StatusCode: "200"
           ResponseParameters:
@@ -150,7 +150,7 @@ Resources:
     Properties:
       Bucket: !Ref "rS3StaticWebsiteBucket"
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
           - Sid: PublicReadGetObject
             Effect: Allow
@@ -165,27 +165,26 @@ Resources:
               StringEquals:
                 AWS:SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${rCloudFrontWebsiteDistribution}"
 
-  rOriginAccessIdentity:
-    Type: 'AWS::CloudFront::CloudFrontOriginAccessIdentity'
-    Properties:
-      CloudFrontOriginAccessIdentityConfig:
-        Comment: !Sub 'Static assets for the React application in ${AWS::StackName}'
-
+  rCloudFrontOriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties: 
+      OriginAccessControlConfig:
+        Description: Default Origin Access Control
+        Name: !Ref AWS::StackName
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
 
   rCloudFrontWebsiteDistribution:
     Type: AWS::CloudFront::Distribution
-    DependsOn: rOriginAccessIdentity
+    DependsOn: rCloudFrontOriginAccessControl
     Properties:
       DistributionConfig:
         Origins:
           - Id: S3Origin
             DomainName: !GetAtt rS3StaticWebsiteBucket.RegionalDomainName
             S3OriginConfig:
-              OriginAccessIdentity: !Join 
-                - "/"
-                - - "origin-access-identity"
-                  - "cloudfront"
-                  - !Ref rOriginAccessIdentity
+              OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${rCloudFrontOriginAccessControl}"
         Enabled: true
         DefaultCacheBehavior:
           ViewerProtocolPolicy: redirect-to-https
