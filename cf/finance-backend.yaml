@@ -154,7 +154,8 @@ Resources:
         Statement:
           - Sid: PublicReadGetObject
             Effect: Allow
-            Principal: '*'
+            Principal:
+              AWS: !GetAtt rCloudFrontDistribution.DomainName
             Action:
               - s3:GetObject
             Resource:
