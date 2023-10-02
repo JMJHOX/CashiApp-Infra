@@ -163,7 +163,7 @@ Resources:
               - !Sub "${rS3StaticWebsiteBucket.Arn}/*"
             Condition:
               StringEquals:
-                aws:SourceArn: !Ref "rCloudFrontWebsiteDistribution"
+                aws:SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${rCloudFrontWebsiteDistribution}"
 
   rCloudFrontWebsiteDistribution:
     Type: AWS::CloudFront::Distribution
