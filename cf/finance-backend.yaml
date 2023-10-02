@@ -130,12 +130,27 @@ Resources:
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
 
-  rS3StaticWebiste:
+  rS3StaticWebisteBucket:
     Type: AWS::S3::Bucket
     Properties:
-      AccessControl: PublicRead
+      BucketName: !Sub "static-website-finance-${pStage}"  
       WebsiteConfiguration:
         IndexDocument: index.html
+
+  rS3StaticWebsiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref "rS3StaticWebisteBucket"
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: '*'
+            Action:
+              - s3:GetObject
+            Resource:
+             - !Sub "${rS3StaticWebisteBucket}/*"
 Outputs:
   ApiEndpoint:
     Description: URL de la API Gateway
