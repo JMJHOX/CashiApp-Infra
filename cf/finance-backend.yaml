@@ -129,6 +129,13 @@ Resources:
         - AttributeName: Id
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
+
+  rS3StaticWebiste:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
 Outputs:
   ApiEndpoint:
     Description: URL de la API Gateway
