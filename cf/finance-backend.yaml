@@ -133,7 +133,13 @@ Resources:
   rS3StaticWebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub "static-website-finance-${pStage}"  
+      BucketName: !Sub "static-website-finance-${pStage}"
+      AccessControl: PublicRead # Establece el control de acceso a "Private" por defecto
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
       WebsiteConfiguration:
         IndexDocument: index.html
 
