@@ -138,10 +138,10 @@ Resources:
         Rules:
           - ObjectOwnership: BucketOwnerEnforced
       PublicAccessBlockConfiguration:
-        BlockPublicAcls: false
-        BlockPublicPolicy: false
-        IgnorePublicAcls: false
-        RestrictPublicBuckets: false
+        BlockPublicAcls: true # Restringir el acceso público a S3
+        BlockPublicPolicy: true # Restringir el acceso público a través de políticas
+        IgnorePublicAcls: true # Ignorar ACL públicas
+        RestrictPublicBuckets: true # Restringir buckets públicos
       WebsiteConfiguration:
         IndexDocument: index.html
 
@@ -160,6 +160,22 @@ Resources:
             Resource:
               - !Sub "${rS3StaticWebsiteBucket.Arn}"
               - !Sub "${rS3StaticWebsiteBucket.Arn}/*"
+
+  rCloudFrontWebsiteDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Origins:
+          - DomainName: !GetAtt rS3StaticWebsiteBucket.RegionalDomainName
+            Id: S3Origin
+        Enabled: true
+        DefaultCacheBehavior:
+          ViewerProtocolPolicy: redirect-to-https
+          TargetOriginId: S3Origin
+          ForwardedValues:
+            QueryString: false
+          DefaultTTL: 86400
+        DefaultRootObject: index.html
 Outputs:
   ApiEndpoint:
     Description: URL de la API Gateway
