@@ -167,7 +167,7 @@ Resources:
 
   rCloudFrontOriginAccessControl:
     Type: AWS::CloudFront::OriginAccessControl
-    Properties: 
+    Properties:
       OriginAccessControlConfig:
         Description: Default Origin Access Control
         Name: !Ref AWS::StackName
@@ -184,7 +184,8 @@ Resources:
           - Id: S3Origin
             DomainName: !GetAtt rS3StaticWebsiteBucket.RegionalDomainName
             S3OriginConfig:
-              OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${rCloudFrontOriginAccessControl}"
+              OriginAccessIdentity: ""
+            OriginAccessControlId: !GetAtt "rCloudFrontOriginAccessControl.Id"
         Enabled: true
         DefaultCacheBehavior:
           ViewerProtocolPolicy: redirect-to-https
