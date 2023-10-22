@@ -284,29 +284,29 @@ Resources:
         Rules:
           - ObjectOwnership: BucketOwnerEnforced
       PublicAccessBlockConfiguration:
-        BlockPublicAcls: false # Restringir el acceso público a S3
-        BlockPublicPolicy: false # Restringir el acceso público a través de políticas
-        IgnorePublicAcls: false # Ignorar ACL públicas
-        RestrictPublicBuckets: false # Restringir buckets públicos
+        BlockPublicAcls: true # Restringir el acceso público a S3
+        BlockPublicPolicy: true # Restringir el acceso público a través de políticas
+        IgnorePublicAcls: true # Ignorar ACL públicas
+        RestrictPublicBuckets: true # Restringir buckets públicos
       # WebsiteConfiguration:
       #   IndexDocument: index.html
 
-  rS3ClientsDiligentIdentityDocumentsBucketPolicy:
-    Type: AWS::S3::BucketPolicy
-    Properties:
-      Bucket: !Ref "rS3ClientsDiligentIdentityDocuments"
-      PolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Sid: PublicReadGetObject
-            Effect: Allow
-            Principal:
-              Service: "cloudfront.amazonaws.com"
-            Action:
-              - s3:GetObject
-            Resource:
-              - !Sub "${rS3StaticWebsiteBucket.Arn}"
-              - !Sub "${rS3StaticWebsiteBucket.Arn}/*"
+  # rS3ClientsDiligentIdentityDocumentsBucketPolicy:
+  #   Type: AWS::S3::BucketPolicy
+  #   Properties:
+  #     Bucket: !Ref "rS3ClientsDiligentIdentityDocuments"
+  #     PolicyDocument:
+  #       Version: "2012-10-17"
+  #       Statement:
+  #         - Sid: PublicReadGetObject
+  #           Effect: Allow
+  #           Principal:
+  #             Service: "cloudfront.amazonaws.com"
+  #           Action:
+  #             - s3:GetObject
+  #           Resource:
+  #             - !Sub "${rS3StaticWebsiteBucket.Arn}"
+  #             - !Sub "${rS3StaticWebsiteBucket.Arn}/*"
 
   rS3ClientsDiligentLoans:
     Type: AWS::S3::Bucket
@@ -316,29 +316,29 @@ Resources:
         Rules:
           - ObjectOwnership: BucketOwnerEnforced
       PublicAccessBlockConfiguration:
-        BlockPublicAcls: false # Restringir el acceso público a S3
-        BlockPublicPolicy: false # Restringir el acceso público a través de políticas
-        IgnorePublicAcls: false # Ignorar ACL públicas
-        RestrictPublicBuckets: false # Restringir buckets públicos
+        BlockPublicAcls: true # Restringir el acceso público a S3
+        BlockPublicPolicy: true # Restringir el acceso público a través de políticas
+        IgnorePublicAcls: true # Ignorar ACL públicas
+        RestrictPublicBuckets: true # Restringir buckets públicos
       # WebsiteConfiguration:
       #   IndexDocument: index.html
 
-  rS3ClientsDiligentLoansBucketPolicy:
-    Type: AWS::S3::BucketPolicy
-    Properties:
-      Bucket: !Ref "rS3ClientsDiligentLoans"
-      PolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Sid: PublicReadGetObject
-            Effect: Allow
-            Principal:
-              Service: "cloudfront.amazonaws.com"
-            Action:
-              - s3:GetObject
-            Resource:
-              - !Sub "${rS3StaticWebsiteBucket.Arn}"
-              - !Sub "${rS3StaticWebsiteBucket.Arn}/*"
+  # rS3ClientsDiligentLoansBucketPolicy:
+  #   Type: AWS::S3::BucketPolicy
+  #   Properties:
+  #     Bucket: !Ref "rS3ClientsDiligentLoans"
+  #     PolicyDocument:
+  #       Version: "2012-10-17"
+  #       Statement:
+  #         - Sid: PublicReadGetObject
+  #           Effect: Allow
+  #           Principal:
+  #             Service: "cloudfront.amazonaws.com"
+  #           Action:
+  #             - s3:GetObject
+  #           Resource:
+  #             - !Sub "${rS3StaticWebsiteBucket.Arn}"
+  #             - !Sub "${rS3StaticWebsiteBucket.Arn}/*"
   ### END BUCKETS S3 ###
 
   rCloudFrontOriginAccessControl:
