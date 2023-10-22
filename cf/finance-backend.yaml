@@ -68,7 +68,7 @@ Resources:
               - Effect: Allow
                 Action:
                   - "dynamodb:PutItem"
-                Resource: !Ref rDynamoDbNewClientsFinanceTable
+                Resource: !GetAtt rDynamoDbNewClientsFinanceTable.Arn
 
   rApiGWFFinanceAPI:
     Type: AWS::ApiGateway::RestApi
