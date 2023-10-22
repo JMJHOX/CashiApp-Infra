@@ -16,6 +16,7 @@ Parameters:
     Description: ARN del bucket de despliegue
 
 Resources:
+### LAMBDAS ###
   rLambdaRegisterClientPetition:
     Type: AWS::Lambda::Function
     Properties:
@@ -69,6 +70,107 @@ Resources:
                 Action:
                   - "dynamodb:PutItem"
                 Resource: !GetAtt rDynamoDbNewClientsFinanceTable.Arn
+
+  rLambdaLoanMotorDecision:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "loan-motor-decision-${pStage}"
+      Role: !GetAtt "rIAMLambdaLoanMotorDecisionRole.Arn"
+      Handler: "Loans_Motor_Decision/index.lambda_handler"
+      Code:
+        S3Bucket: !Ref DeploymentBucketName
+        S3Key: "api-rest/Loans_Motor_Decision.zip" # Reemplaza con la ubicación de tu código en el bucket
+      Environment: # Agrega la nueva variable de entorno aquí
+        Variables:
+          DBTableNewClientsToRegister: !Ref "rDynamoDbNewClientsFinanceTable"
+      Runtime: python3.8
+
+  rIAMLambdaLoanMotorDecisionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: LambdaExecutionRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaLogsPolocy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: arn:aws:logs:*:*:*
+        - PolicyName: LambdaInvokePolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "lambda:InvokeFunction"
+                Resource: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:<api-id>/*/<method>/<resource>"
+
+        # - PolicyName: DynamoDBPolicy
+        #   PolicyDocument:
+        #     Version: "2012-10-17"
+        #     Statement:
+        #       - Effect: Allow
+        #         Action:
+        #           - "dynamodb:PutItem"
+        #         Resource: !GetAtt rDynamoDbNewClientsFinanceTable.Arn
+
+  rLambdaClientStatusEmail:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub "client-status-email-${pStage}"
+      Role: !GetAtt "rIAMLambdaClientStatusEmailRole.Arn"
+      Handler: "Client_Status_Email/index.lambda_handler"
+      Code:
+        S3Bucket: !Ref DeploymentBucketName
+        S3Key: "api-rest/Client_Status_Email.zip" # Reemplaza con la ubicación de tu código en el bucket
+      Environment: # Agrega la nueva variable de entorno aquí
+        Variables:
+          DBTableNewClientsToRegister: !Ref "rDynamoDbNewClientsFinanceTable"
+      Runtime: python3.8
+
+  rIAMLambdaClientStatusEmailRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: LambdaExecutionRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaLogsPolocy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: arn:aws:logs:*:*:*
+        - PolicyName: LambdaInvokePolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "lambda:InvokeFunction"
+                Resource: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:<api-id>/*/<method>/<resource>"
+
+### END LAMBDAS ###
 
   rApiGWFFinanceAPI:
     Type: AWS::ApiGateway::RestApi
@@ -138,7 +240,7 @@ Resources:
         - AttributeName: Id
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
-
+### BUCKETS S3 ###
   rS3StaticWebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -174,6 +276,71 @@ Resources:
               StringEquals:
                 AWS:SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${rCloudFrontWebsiteDistribution}"
 
+  rS3ClientsDiligentIdentityDocuments:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "static-website-finance-${pStage}"
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false # Restringir el acceso público a S3
+        BlockPublicPolicy: false # Restringir el acceso público a través de políticas
+        IgnorePublicAcls: false # Ignorar ACL públicas
+        RestrictPublicBuckets: false # Restringir buckets públicos
+      # WebsiteConfiguration:
+      #   IndexDocument: index.html
+
+  rS3ClientsDiligentIdentityDocumentsBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref "rS3ClientsDiligentIdentityDocuments"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal:
+              Service: "cloudfront.amazonaws.com"
+            Action:
+              - s3:GetObject
+            Resource:
+              - !Sub "${rS3StaticWebsiteBucket.Arn}"
+              - !Sub "${rS3StaticWebsiteBucket.Arn}/*"
+
+  rS3ClientsDiligentLoans:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "static-website-finance-${pStage}"
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false # Restringir el acceso público a S3
+        BlockPublicPolicy: false # Restringir el acceso público a través de políticas
+        IgnorePublicAcls: false # Ignorar ACL públicas
+        RestrictPublicBuckets: false # Restringir buckets públicos
+      # WebsiteConfiguration:
+      #   IndexDocument: index.html
+
+  rS3ClientsDiligentLoansBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref "rS3ClientsDiligentLoans"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal:
+              Service: "cloudfront.amazonaws.com"
+            Action:
+              - s3:GetObject
+            Resource:
+              - !Sub "${rS3StaticWebsiteBucket.Arn}"
+              - !Sub "${rS3StaticWebsiteBucket.Arn}/*"           
+### END BUCKETS S3 ###
+
   rCloudFrontOriginAccessControl:
     Type: AWS::CloudFront::OriginAccessControl
     Properties:
@@ -203,8 +370,10 @@ Resources:
             QueryString: false
           DefaultTTL: 86400
         DefaultRootObject: index.html
-Outputs:
-  ApiEndpoint:
-    Description: URL de la API Gateway
-    Value:
-      Fn::Sub: https://${rApiGWFFinanceAPI}.execute-api.${AWS::Region}.amazonaws.com/prod/hello/
+
+## SES ##
+  rSESEmailSenderAdress:
+    Type: AWS::SES::EmailIdentity
+    Properties:
+      EmailIdentity: "josemiguelaparicio507@gmail.com"
+## END SES ##
