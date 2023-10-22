@@ -192,7 +192,7 @@ Resources:
       PathPart: "/finance/client-registration-loan"
       RestApiId: !Ref "rApiGWFFinanceAPI"
 
-  rApiGWFinanceMethod:
+  rApiGWFinanceMethodPOST:
     Type: AWS::ApiGateway::Method
     Properties:
       AuthorizationType: NONE
@@ -220,12 +220,52 @@ Resources:
             method.response.header.Access-Control-Allow-Methods: true
             method.response.header.Access-Control-Allow-Origin: true
 
+  rApiGWFinanceMethodOPTIONS:
+      Type: AWS::ApiGateway::Method
+      Properties:
+        AuthorizationType: NONE
+        HttpMethod: OPTIONS
+        ResourceId: !Ref rApiGWFinanceResource
+        RestApiId: !Ref rApiGWFFinanceAPI
+        Integration:
+          IntegrationHttpMethod: OPTIONS
+          Type: MOCK
+          Uri: !Sub
+            - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${rLambdaRegisterClientPetition.Arn}/invocations"
+            - lambdaArn: !GetAtt "rLambdaRegisterClientPetition.Arn"
+          IntegrationResponses:
+            - StatusCode: "200"
+              ResponseParameters:
+                method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
+                method.response.header.Access-Control-Allow-Origin: "'*'"
+              ResponseTemplates:
+                application/json: 
+                  | 
+                    "{
+                      "statusCode": 200,
+                      "headers": {
+                        "Access-Control-Allow-Headers": "Content-Type",
+                        "Access-Control-Allow-Origin": "https://dpbugva79arxb.cloudfront.net",
+                        "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                      },
+                      "body": $input.json('$.body')
+                    }"
+        MethodResponses:
+          - StatusCode: "200"
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: true
+              method.response.header.Access-Control-Allow-Methods: true
+              method.response.header.Access-Control-Allow-Origin: true
+
   rApiGWFinanceDeployment:
     Type: AWS::ApiGateway::Deployment
-    DependsOn: "rApiGWFinanceMethod"
+    DependsOn: 
+        - "rApiGWFinanceMethodPOST"
+        - "rApiGWFinanceMethodOPTIONS"
     Properties:
       RestApiId: !Ref "rApiGWFFinanceAPI"
-      StageName: !Ref pStage
+      StageName: !Ref "pStage"
 
   rAPIGWFinanceLambdaPermission:
     Type: AWS::Lambda::Permission
