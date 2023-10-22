@@ -189,7 +189,7 @@ Resources:
     Type: AWS::ApiGateway::Resource
     Properties:
       ParentId: !GetAtt "rApiGWFFinanceAPI.RootResourceId"
-      PathPart: "client_registration_loan"
+      PathPart: "client-registration-loan"
       RestApiId: !Ref "rApiGWFFinanceAPI"
 
   rApiGWFinanceMethodPOST:
@@ -282,7 +282,7 @@ Resources:
     Type: AWS::ApiGateway::Resource
     Properties:
       ParentId: !GetAtt "rApiGWFFinanceAPI.RootResourceId"
-      PathPart: "email_sender_motor_loan"
+      PathPart: "email-sender-motor-loan"
       RestApiId: !Ref "rApiGWFFinanceAPI"
 
   rApiGWClientEmailSenderMethod:
