@@ -172,17 +172,24 @@ Resources:
 
   ### END LAMBDAS ###
 
+  ## API GATEWAY ENDPOINTS ##
+
   rApiGWFFinanceAPI:
     Type: AWS::ApiGateway::RestApi
-    DependsOn: rLambdaRegisterClientPetition
+    DependsOn: 
+      - "rLambdaRegisterClientPetition"
+      - "rLambdaClientStatusEmail"
     Properties:
       Name: !Sub "cashiapp-finance-api-rest-${pStage}"
+      
+  ## ENDPOINT CLIENT REGISTRATION
+
 
   rApiGWFinanceResource:
     Type: AWS::ApiGateway::Resource
     Properties:
       ParentId: !GetAtt "rApiGWFFinanceAPI.RootResourceId"
-      PathPart: finance
+      PathPart: "/finance/client-registration-loan"
       RestApiId: !Ref "rApiGWFFinanceAPI"
 
   rApiGWFinanceMethod:
@@ -228,7 +235,58 @@ Resources:
       FunctionName: !Ref rLambdaRegisterClientPetition
       Principal: "apigateway.amazonaws.com"
       SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${rApiGWFFinanceAPI}/*/POST/finance"
+  ## END ENDPOINT CLIENT REGISTRATION
 
+  ## ENDPOINT Sucursal Emails
+  rApiGWClientEmailSenderResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt "rApiGWFFinanceAPI.RootResourceId"
+      PathPart: "/finance/email-sender-loan"
+      RestApiId: !Ref "rApiGWFFinanceAPI"
+
+  rApiGWClientEmailSenderMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      AuthorizationType: NONE
+      HttpMethod: POST
+      ResourceId: !Ref rApiGWClientEmailSenderResource
+      RestApiId: !Ref rApiGWFFinanceAPI
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri: !Sub
+          - "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${rLambdaClientStatusEmail.Arn}/invocations"
+          - lambdaArn: !GetAtt "rLambdaClientStatusEmail.Arn"
+        IntegrationResponses:
+          - StatusCode: "200"
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Methods: "'GET,POST,PUT,DELETE,OPTIONS'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            ResponseTemplates:
+              application/json: "{}"
+      MethodResponses:
+        - StatusCode: "200"
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: true
+            method.response.header.Access-Control-Allow-Methods: true
+            method.response.header.Access-Control-Allow-Origin: true
+
+
+  rApiGWClientEmailSenderLambdaPermission:
+    Type: AWS::Lambda::Permission
+    DependsOn: rApiGWFinanceDeployment
+    Properties:
+      Action: "lambda:InvokeFunction"
+      FunctionName: !Ref rLambdaClientStatusEmail
+      Principal: "apigateway.amazonaws.com"
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${rApiGWFFinanceAPI}/*/POST/finance/email-sender-loan"
+  ## END ENDPOINT CLIENT REGISTRATION
+
+  ## END API GATEWAY ENDPOINTS ##
+
+  ## DYNAMO TABLES ##
   rDynamoDbNewClientsFinanceTable:
     Type: "AWS::DynamoDB::Table"
     Properties:
@@ -240,6 +298,8 @@ Resources:
         - AttributeName: Id
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
+  ## END DYNAMO TABLES ##
+
   ### BUCKETS S3 ###
   rS3StaticWebsiteBucket:
     Type: AWS::S3::Bucket
@@ -376,4 +436,4 @@ Resources:
     Type: AWS::SES::EmailIdentity
     Properties:
       EmailIdentity: "josemiguelaparicio507@gmail.com"
-## END SES ##
+  ## END SES ##
