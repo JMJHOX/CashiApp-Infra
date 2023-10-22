@@ -58,8 +58,17 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - lambda:InvokeFunction
+                  - "lambda:InvokeFunction"
                 Resource: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:<api-id>/*/<method>/<resource>"
+
+        - PolicyName: DynamoDBPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "dynamodb:PutItem"
+                Resource: !Ref rDynamoDbNewClientsFinanceTable
 
   rApiGWFFinanceAPI:
     Type: AWS::ApiGateway::RestApi
@@ -78,7 +87,7 @@ Resources:
     Type: AWS::ApiGateway::Method
     Properties:
       AuthorizationType: NONE
-      HttpMethod: GET
+      HttpMethod: POST
       ResourceId: !Ref rApiGWFinanceResource
       RestApiId: !Ref rApiGWFFinanceAPI
       Integration:
@@ -116,7 +125,7 @@ Resources:
       Action: "lambda:InvokeFunction"
       FunctionName: !Ref rLambdaRegisterClientPetition
       Principal: "apigateway.amazonaws.com"
-      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${rApiGWFFinanceAPI}/*/GET/finance"
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${rApiGWFFinanceAPI}/*/POST/finance"
 
   rDynamoDbNewClientsFinanceTable:
     Type: "AWS::DynamoDB::Table"
