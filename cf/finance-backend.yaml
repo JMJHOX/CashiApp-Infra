@@ -16,7 +16,7 @@ Parameters:
     Description: ARN del bucket de despliegue
 
 Resources:
-### LAMBDAS ###
+  ### LAMBDAS ###
   rLambdaRegisterClientPetition:
     Type: AWS::Lambda::Function
     Properties:
@@ -34,7 +34,7 @@ Resources:
   rIAMLambdaRegisterClientPetitionRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: LambdaExecutionRole
+      RoleName: "lambda-client-register-petition-iam-role"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -88,7 +88,7 @@ Resources:
   rIAMLambdaLoanMotorDecisionRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: LambdaExecutionRole
+      RoleName: "loan-motor-decision-iam-role"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -142,7 +142,7 @@ Resources:
   rIAMLambdaClientStatusEmailRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: LambdaExecutionRole
+      RoleName: "client-status-email-iam-role"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -170,7 +170,7 @@ Resources:
                   - "lambda:InvokeFunction"
                 Resource: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:<api-id>/*/<method>/<resource>"
 
-### END LAMBDAS ###
+  ### END LAMBDAS ###
 
   rApiGWFFinanceAPI:
     Type: AWS::ApiGateway::RestApi
@@ -240,7 +240,7 @@ Resources:
         - AttributeName: Id
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
-### BUCKETS S3 ###
+  ### BUCKETS S3 ###
   rS3StaticWebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -338,8 +338,8 @@ Resources:
               - s3:GetObject
             Resource:
               - !Sub "${rS3StaticWebsiteBucket.Arn}"
-              - !Sub "${rS3StaticWebsiteBucket.Arn}/*"           
-### END BUCKETS S3 ###
+              - !Sub "${rS3StaticWebsiteBucket.Arn}/*"
+  ### END BUCKETS S3 ###
 
   rCloudFrontOriginAccessControl:
     Type: AWS::CloudFront::OriginAccessControl
@@ -371,7 +371,7 @@ Resources:
           DefaultTTL: 86400
         DefaultRootObject: index.html
 
-## SES ##
+  ## SES ##
   rSESEmailSenderAdress:
     Type: AWS::SES::EmailIdentity
     Properties:
