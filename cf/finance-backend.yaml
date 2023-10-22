@@ -279,7 +279,7 @@ Resources:
   rS3ClientsDiligentIdentityDocuments:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub "static-website-finance-${pStage}"
+      BucketName: !Sub "client-diligence-identity-documents-${pStage}"
       OwnershipControls:
         Rules:
           - ObjectOwnership: BucketOwnerEnforced
@@ -311,7 +311,7 @@ Resources:
   rS3ClientsDiligentLoans:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub "static-website-finance-${pStage}"
+      BucketName: !Sub "client-diligence-loans-${pStage}"
       OwnershipControls:
         Rules:
           - ObjectOwnership: BucketOwnerEnforced
