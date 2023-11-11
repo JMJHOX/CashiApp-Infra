@@ -107,6 +107,16 @@ Resources:
                   - logs:CreateLogStream
                   - logs:PutLogEvents
                 Resource: arn:aws:logs:*:*:*
+        - PolicyName: DynamoStreamsPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:GetRecords
+                  - dynamodb:GetShardIterator
+                  - dynamodb:DescribeStream
+                Resource: !GetAtt rDynamoDbNewClientsFinanceTable.Arn
         - PolicyName: LambdaInvokePolicy
           PolicyDocument:
             Version: "2012-10-17"
@@ -338,7 +348,22 @@ Resources:
         - AttributeName: Id
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
+      TimeToLiveSpecification: 
+          AttributeName: TTL
+          Enabled: true
+      StreamSpecification: "OLD_IMAGE"    
   ## END DYNAMO TABLES ##
+
+  rLambdaTriggerMotorLoanEventSourceMapping:
+    Type: AWS::Lambda::EventSourceMapping
+    Properties:
+      EventSourceArn: !GetAtt rDynamoDbNewClientsFinanceTable.StreamArn
+      FunctionName: !GetAtt rLambdaLoanMotorDecision.Arn
+      BatchSize: 1
+      MaximumBatchingWindowInSeconds: 5
+      StartingPosition: LATEST
+      MaximumRetryAttempts: 1
+      Enabled: True
 
   ### BUCKETS S3 ###
   rS3StaticWebsiteBucket:

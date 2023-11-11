@@ -4,7 +4,7 @@ import boto3
 import os
 
 # Crea un cliente DynamoDB
-dynamodb = boto3.client('dynamodb', region_name='tu-region-aws')
+dynamodb = boto3.client('dynamodb', region_name='us-east-1')
 
 # Nombre de la tabla en la que deseas insertar datos
 CLIENT_SESSION_DYNAMO_TABLE = os.environ['DBTableNewClientsToRegister']

@@ -1,0 +1,192 @@
+<mxfile host="app.diagrams.net" modified="2023-11-04T02:25:10.576Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.2088.76" etag="FMMDwFlyyK-ebrCPZjy7" version="22.0.8" type="device">
+  <diagram name="Page-1" id="oyXjMBwLd72sX3vLLx7r">
+    <mxGraphModel dx="2744" dy="1474" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-1" target="S3eThqVW7Vl7j0v0JzJp-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-1" value="El Conflicto" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="70" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-2" target="S3eThqVW7Vl7j0v0JzJp-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-2" value="Es" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="410" y="188" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-4" target="S3eThqVW7Vl7j0v0JzJp-6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="360" />
+              <mxPoint x="735" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-4" target="S3eThqVW7Vl7j0v0JzJp-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="360" />
+              <mxPoint x="90" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-4" target="S3eThqVW7Vl7j0v0JzJp-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-4" value="Cuando dos o más personas con intereses diferentes entran en confrontación" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="250" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-6" target="S3eThqVW7Vl7j0v0JzJp-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-6" value="Puede presentarse en&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="665" y="430" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-8" value="&lt;ul&gt;&lt;li&gt;Grupos sociales&lt;/li&gt;&lt;li&gt;Individuos&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="520" width="150" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-10" target="S3eThqVW7Vl7j0v0JzJp-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-10" value="Las causas son" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="35" y="430" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-12" value="&lt;ul&gt;&lt;li&gt;Factores culturales&lt;/li&gt;&lt;li&gt;Factores sociales&lt;/li&gt;&lt;li&gt;Factores de comportamiento&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="10" y="520" width="160" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-14" target="S3eThqVW7Vl7j0v0JzJp-17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="670" />
+              <mxPoint x="531" y="670" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-14" target="S3eThqVW7Vl7j0v0JzJp-16">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="670" />
+              <mxPoint x="145" y="670" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-14" target="S3eThqVW7Vl7j0v0JzJp-18">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="670" />
+              <mxPoint x="711" y="670" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-14" target="S3eThqVW7Vl7j0v0JzJp-31">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="670" />
+              <mxPoint x="335" y="670" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-14" target="S3eThqVW7Vl7j0v0JzJp-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-14" value="Tipos de conflicto" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="370" y="430" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-16" target="S3eThqVW7Vl7j0v0JzJp-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-16" value="Conflicto auténtico" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="85" y="690" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-17" target="S3eThqVW7Vl7j0v0JzJp-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-17" value="Conflicto de atribución errónea" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="471" y="690" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-18" target="S3eThqVW7Vl7j0v0JzJp-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-18" value="Conflicto latente" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="651.25" y="690" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-24" value="Ambas partes perciben la situación conflictiva objetiva de la misma manera" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="85" y="790" width="120" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-26" value="Cada una de las partes tiene una interpretación diferente a la situación conflictiva objetiva" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="465" y="790" width="133" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-28" value="El conflicto aún no se manifiesta, pero aparece como base en otros conflictos" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="635" y="790" width="152.5" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-31" target="S3eThqVW7Vl7j0v0JzJp-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-31" value="Pseudo conflicto" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="275" y="690" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-32" value="Ambas partes perciben la situación conflictiva objetiva de la misma manera" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="275" y="790" width="120" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-35" target="S3eThqVW7Vl7j0v0JzJp-41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-35" target="S3eThqVW7Vl7j0v0JzJp-39">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="990" />
+              <mxPoint x="273" y="990" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-35" target="S3eThqVW7Vl7j0v0JzJp-37">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="990" />
+              <mxPoint x="115" y="990" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-35" target="S3eThqVW7Vl7j0v0JzJp-42">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="990" />
+              <mxPoint x="600" y="990" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="S3eThqVW7Vl7j0v0JzJp-35" target="S3eThqVW7Vl7j0v0JzJp-43">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="990" />
+              <mxPoint x="777" y="990" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-35" value="Para manejar un conflicto, podemos aplicar cualquiera de las siguientes técnicas" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="205" y="940" width="450" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-37" value="Complaciente:&lt;br&gt;Abandona sus propias necesidades en favor de los demás" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="45" y="1020" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-39" value="Evasivo:&lt;br&gt;Evita por completo el enfrentamiento" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="205" y="1020" width="135" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-41" value="Comprometido:&lt;br&gt;Intenta encontrar una solucion que convezca a todas las partes involucradas" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" y="1020" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-42" value="Colaborativo:&lt;br&gt;Satisfacer a todos, sin soluciones a medias" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="535" y="1020" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-43" value="Competitivo:&lt;br&gt;Se centra en una solución a su favor" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="705" y="1020" width="145" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="S3eThqVW7Vl7j0v0JzJp-49" value="José Aparicio&lt;br&gt;8-932-1588&lt;br&gt;Licenciatura en Ingeniería de redes de comunciaciones con énfasis en tecnologías inalámbricas" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="7.5" y="10" width="530" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
