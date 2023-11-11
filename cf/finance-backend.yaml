@@ -116,6 +116,7 @@ Resources:
                   - dynamodb:GetRecords
                   - dynamodb:GetShardIterator
                   - dynamodb:DescribeStream
+                  - dynamodb:ListStreams
                 Resource: !GetAtt rDynamoDbNewClientsFinanceTable.Arn
         - PolicyName: LambdaInvokePolicy
           PolicyDocument:
