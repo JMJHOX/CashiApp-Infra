@@ -117,7 +117,7 @@ Resources:
                   - dynamodb:GetShardIterator
                   - dynamodb:DescribeStream
                   - dynamodb:ListStreams
-                Resource: !GetAtt rDynamoDbNewClientsFinanceTable.Arn
+                Resource: !GetAtt rDynamoDbNewClientsFinanceTable.StreamArn
         - PolicyName: LambdaInvokePolicy
           PolicyDocument:
             Version: "2012-10-17"
@@ -135,7 +135,7 @@ Resources:
         #         Action:
         #           - "dynamodb:PutItem"
         #         Resource: !GetAtt rDynamoDbNewClientsFinanceTable.Arn
-        
+
 
   rLambdaClientStatusEmail:
     Type: AWS::Lambda::Function
