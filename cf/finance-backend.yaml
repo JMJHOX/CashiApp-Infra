@@ -351,7 +351,8 @@ Resources:
       TimeToLiveSpecification: 
           AttributeName: TTL
           Enabled: true
-      StreamSpecification: "OLD_IMAGE"    
+      StreamSpecification:
+        StreamViewType: "OLD_IMAGE"    
   ## END DYNAMO TABLES ##
 
   rLambdaTriggerMotorLoanEventSourceMapping:
