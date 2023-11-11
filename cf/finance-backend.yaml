@@ -135,6 +135,7 @@ Resources:
         #         Action:
         #           - "dynamodb:PutItem"
         #         Resource: !GetAtt rDynamoDbNewClientsFinanceTable.Arn
+        
 
   rLambdaClientStatusEmail:
     Type: AWS::Lambda::Function
