@@ -191,6 +191,15 @@ Resources:
                 Action:
                   - "lambda:InvokeFunction"
                 Resource: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:<api-id>/*/<method>/<resource>"
+        - PolicyName: SESPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "ses:SendEmail"
+                  - "ses:SendRawEmail"                  
+                Resource: "*"
 
   ### END LAMBDAS ###
 
