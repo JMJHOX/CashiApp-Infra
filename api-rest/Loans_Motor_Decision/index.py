@@ -31,7 +31,7 @@ def lambda_handler(event, context):
     for rec in event['Records']:
 
         if 'OldImage' in rec['dynamodb']:
-            payload = rec['OldImage']
+            payload = rec['dynamodb']['OldImage']
             client_id = payload['client_identity_id']['S']
             contact_phone = payload['contact_phone']['S']
             last_name = payload['last_name']['S']

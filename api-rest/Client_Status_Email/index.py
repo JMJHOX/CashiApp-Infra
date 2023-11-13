@@ -6,7 +6,7 @@ import os
 ses_local_client = boto3.client('ses', region_name='us-east-1')
 # Nombre de la tabla en la que deseas insertar datos
 CLIENT_SESSION_DYNAMO_TABLE = os.environ['DBTableNewClientsToRegister']
-SOURCE_EMAIL_SENDER = os.environ['DBTableNewClientsToRegister']
+SOURCE_EMAIL_SENDER = os.environ['SourceEmailSender']
 
 
 
@@ -41,4 +41,5 @@ def send_email(email_client):
 
 def lambda_handler(event, context):
     email_client = event['email']
+    print("h")
     return send_email(email_client)

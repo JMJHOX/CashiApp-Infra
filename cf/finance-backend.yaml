@@ -158,6 +158,7 @@ Resources:
       Environment: # Agrega la nueva variable de entorno aquí
         Variables:
           DBTableNewClientsToRegister: !Ref "rDynamoDbNewClientsFinanceTable"
+          SourceEmailSender: "josemiguelaparicio507@gmail.com"
       Runtime: python3.8
 
   rIAMLambdaClientStatusEmailRole:
