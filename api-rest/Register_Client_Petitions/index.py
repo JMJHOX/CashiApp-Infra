@@ -41,7 +41,7 @@ def register_client_on_dynamo(uuid, payload):
         # Otro atributo numérico
         'contact_phone': {'S': payload['contact_phone']},
         'loan_requested': {'S': payload['loan_qty']},  # Otro atributo numérico
-        'TTL': {'S': unix_timestamp_tomorrow},  # Otro atributo numérico
+        'TTL': {'N': unix_timestamp_tomorrow},  # Otro atributo numérico
     }
 
     # Inserta el elemento en la tabla

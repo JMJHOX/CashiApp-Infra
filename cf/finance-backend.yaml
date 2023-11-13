@@ -83,6 +83,7 @@ Resources:
       Environment: # Agrega la nueva variable de entorno aquí
         Variables:
           DBTableNewClientsToRegister: !Ref "rDynamoDbNewClientsFinanceTable"
+          LambdaEmailSenderClient: !Ref "rLambdaClientStatusEmail"
       Runtime: python3.8
 
   rIAMLambdaLoanMotorDecisionRole:
@@ -126,6 +127,14 @@ Resources:
                 Action:
                   - "lambda:InvokeFunction"
                 Resource: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:<api-id>/*/<method>/<resource>"
+        - PolicyName: LambdaInvokeEmailSenderPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "lambda:InvokeFunction"
+                Resource: !GetAtt "rLambdaClientStatusEmail.Arn"
 
         # - PolicyName: DynamoDBPolicy
         #   PolicyDocument:
